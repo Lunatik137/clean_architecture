@@ -1,7 +1,4 @@
-/// Product Entity – Domain Layer
-///
-/// Enterprise-wide business object. Pure Dart – không import Flutter.
-/// Đây là lớp trong cùng của Clean Architecture.
+/// Enterprise-wide business object.
 class Product {
   final String id;
   final String name;

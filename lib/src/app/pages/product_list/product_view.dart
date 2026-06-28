@@ -5,34 +5,15 @@ import '../../../data/datasources/product_api_data_source.dart';
 import '../../../data/repositories/product_repository_impl.dart';
 import 'product_controller.dart';
 
-/// ProductListPage – App Layer (View)
-///
-/// View gồm 2 class:
-///   1. ProductListPage (extends CleanView) – Widget gốc, nơi inject dependencies
-///   2. ProductListViewState (extends CleanViewState) – UI implementation
-///
-/// View chỉ biết Controller, không biết Presenter/UseCase/Repository.
 class ProductListPage extends CleanView {
   const ProductListPage({super.key});
 
-  /// DI bắt đầu từ đây:
-  ///   ProductController(
-  ///     ProductRepositoryImpl(    ← Data layer implementation
-  ///       ProductApiDataSource()  ← Data layer data source
-  ///     )
-  ///   )
   @override
   State<StatefulWidget> createState() => ProductListViewState();
 }
 
-/// ViewState – UI implementation
-///
-/// Constructor inject Controller với đầy đủ dependency chain.
-/// View sử dụng ControlledWidgetBuilder để bind data từ Controller.
 class ProductListViewState
     extends CleanViewState<ProductListPage, ProductController> {
-  /// DI Chain hoàn chỉnh:
-  ///   View → Controller → Presenter → UseCase → Repository → DataSource
   ProductListViewState()
       : super(
           ProductController(
@@ -53,7 +34,6 @@ class ProductListViewState
         ),
         body: Column(
           children: [
-            // ===== Header Card =====
             Container(
               width: double.infinity,
               margin: const EdgeInsets.all(16),
@@ -84,8 +64,6 @@ class ProductListViewState
               ),
             ),
 
-            // ===== Load Button =====
-            // ControlledWidgetBuilder binds Controller data to Widget
             ControlledWidgetBuilder<ProductController>(
               builder: (context, controller) {
                 return Padding(
@@ -127,7 +105,6 @@ class ProductListViewState
 
             const SizedBox(height: 16),
 
-            // ===== Product List =====
             Expanded(
               child: ControlledWidgetBuilder<ProductController>(
                 builder: (context, controller) {
@@ -219,7 +196,6 @@ class ProductListViewState
               ),
             ),
 
-            // ===== Footer =====
             Container(
               width: double.infinity,
               padding: const EdgeInsets.all(12),
